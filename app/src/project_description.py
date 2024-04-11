@@ -3,7 +3,7 @@
 import streamlit as st
 
 def home_page():
-    with open("../docs/home.md") as f:
+    with open("app/docs/home.md") as f:
         home_markdown: str = f.read()
     st.markdown(home_markdown)
     st.markdown("---")

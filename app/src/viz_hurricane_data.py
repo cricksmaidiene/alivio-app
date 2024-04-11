@@ -29,7 +29,7 @@ def load_viz_files():
     """Load the building and hurricane data for visualization."""
     global GLOBAL_FILES
 
-    building_df: pd.DataFrame = pd.read_parquet("../files/buildings.parquet.gz")
+    building_df: pd.DataFrame = pd.read_parquet("app/files/buildings.parquet.gz")
     building_df["map_polygon_shape"] = (
         building_df["map_polygon"].dropna().apply(wkt.loads)
     )
@@ -45,7 +45,7 @@ def load_viz_files():
     ]
     GLOBAL_FILES["building_df"] = building_df
 
-    h3_8_df: pd.DataFrame = pd.read_parquet("../files/hurricanes_h3_8.parquet.gz")
+    h3_8_df: pd.DataFrame = pd.read_parquet("app/files/hurricanes_h3_8.parquet.gz")
     GLOBAL_FILES["h3_8_df"] = h3_8_df
 
 
@@ -136,7 +136,7 @@ def select_and_display_hurricane():
 
     if tool_tip:
         if tool_tip["text"].startswith("Damage:"):
-            with open(f"../docs/{hurricane.lower()}.md") as f:
+            with open(f"app/docs/{hurricane.lower()}.md") as f:
                 markdown_stream = f.read()
 
             if markdown_stream:
