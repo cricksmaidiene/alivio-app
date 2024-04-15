@@ -61,7 +61,7 @@ def _render_h3_layer(h3_resolution: int = 8) -> tuple:
         extruded=False,
         get_hexagon=f"h3_cell_{h3_resolution}",
         get_fill_color="[255-gdp_per_capita, 255, gdp_per_capita]",
-        opacity=0.1,
+        opacity=0.02,
         get_line_color=[255, 255, 255],
         line_width_min_pixels=2,
     )
@@ -73,12 +73,12 @@ def _render_h3_layer(h3_resolution: int = 8) -> tuple:
 
 
 def select_layers() -> list:
-    show_h3_layer: bool = st.toggle("Show Demographics (H3)", value=False)
     show_buildings_layer: bool = st.toggle("Show Buildings (Geometries)", value=False)
+    show_h3_layer: bool = st.toggle("Show Demographics (H3)", value=False)
     h3_layer = None
 
     if show_h3_layer:
-        h3_layer = st.select_slider("Select H3 level", [7, 8, 9, 10], value=8)
+        h3_layer = st.selectbox("Select H3 level", [8])
 
     map_layers = []
     tool_tip = None
@@ -96,7 +96,7 @@ def select_layers() -> list:
             auto_highlight=True,
             pickable=True,
         )
-        buildings_tooltip = {"text": "Damage: {damage_level}"}
+        buildings_tooltip = {"text": "Damage: {damage}"}
         tool_tip = buildings_tooltip
         map_layers.append(polygon_layer)
 
@@ -161,5 +161,21 @@ def select_and_display_hurricane():
 
     st.write("### Map of Disaster Area")
     with st.spinner(text="Building Map - Please wait..."):
-        r = pdk.Deck(layers=map_layers, initial_view_state=view_state, tooltip=tool_tip)
+        r = pdk.Deck(layers=map_layers, initial_view_state=view_state, tooltip=tool_tip, map_style="light")
         st.pydeck_chart(r)
+        if tool_tip and (tool_tip["text"].startswith("Damage:") or len(map_layers) == 2):
+            # Create legend for map and display as a table
+            st.write("### Legend")
+            st.dataframe(
+                pd.DataFrame(
+                    {
+                        "Damage Level": ["Destroyed", "Major Damage", "Minor Damage", "No Damage"],
+                        "Color": [
+                            "Red 🔴",
+                            "Yellow 🟡",
+                            "Blue 🔵",
+                            "Green 🟢",
+                        ],
+                    }
+                )
+            )

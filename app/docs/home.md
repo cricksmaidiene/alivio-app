@@ -9,7 +9,7 @@ Vulnerability Assessment Through Demographics & Building Damage Post-Natural Dis
 
 Code on GitHub:
 
-![Alivio](https://img.shields.io/badge/GitHub-181717.svg?style=for-the-badge&logo=GitHub&logoColor=white)
+[![Alivio](https://img.shields.io/badge/GitHub-181717.svg?style=for-the-badge&logo=GitHub&logoColor=white)](https://github.com/cricksmaidiene/alivio)
 
 ## Project
 

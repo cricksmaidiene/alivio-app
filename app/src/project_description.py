@@ -7,4 +7,3 @@ def home_page():
         home_markdown: str = f.read()
     st.markdown(home_markdown)
     st.markdown("---")
-    st.image("https://www.ischool.berkeley.edu/sites/all/themes/custom/i_school/images/logos/berkeleyischool-logo-blue.svg", width=200)
